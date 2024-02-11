@@ -69,6 +69,12 @@ async function fetchImages(query, page) {
     } else {
       loadMoreBtn.style.display = 'block';
     }
+
+    // Відображення повідомлення з кількістю знайдених зображень
+    iziToast.success({
+      title: 'Success',
+      message: `Hooray! We found ${data.totalHits} images.`,
+    });
   } catch (error) {
     console.error(error.message);
     iziToast.error({
