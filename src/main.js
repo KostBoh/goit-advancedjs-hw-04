@@ -1,3 +1,6 @@
+import iziToast from 'iziToast';
+import axios from 'axios';
+
 const form = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
 const loadMoreBtn = document.querySelector('.load-more');
@@ -42,28 +45,35 @@ async function fetchImages(query, page) {
     const data = await response.json();
     if (data.hits.length === 0) {
       gallery.innerHTML = '';
-      throw new Error(
-        'Sorry, ther are no images matching your search query. Pleasetry again.'
-      );
+      iziToast.error({
+        title: 'Error',
+        message:
+          'Sorry, there are no images matching your search query. Please try again.',
+      });
+      return;
     }
     if (page === 1) {
       gallery.innerHTML = '';
     }
     data.hits.forEach(image => {
-      const card = createImaageCard(image);
+      const card = createImageCard(image);
       gallery.appendChild(card);
     });
     if (data.totalHits <= page * PER_PAGE) {
-      loadMorreBtn.style.display = 'none';
+      loadMoreBtn.style.display = 'none';
     } else {
       loadMoreBtn.style.display = 'block';
     }
   } catch (error) {
     console.error(error.message);
+    iziToast.error({
+      title: 'Error',
+      message: 'Failed to fetch images',
+    });
   }
 }
 
-function createImaageCard({
+function createImageCard({
   webformatURL,
   tags,
   likes,
