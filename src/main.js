@@ -62,6 +62,10 @@ async function fetchImages(query, page) {
     });
     if (data.totalHits <= page * PER_PAGE) {
       loadMoreBtn.style.display = 'none';
+      iziToast.info({
+        title: 'Info',
+        message: "We're sorry, but you've reached the end of search results.",
+      });
     } else {
       loadMoreBtn.style.display = 'block';
     }
