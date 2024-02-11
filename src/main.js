@@ -13,6 +13,7 @@ form.addEventListener('submit', async event => {
   const input = form.elements['searchQuery'];
   searchQuery = input.value.trim();
   currentPage = 1;
+  loadMoreBtn.style.display = 'none';
   await fetchImages(searchQuery, currentPage);
 });
 
