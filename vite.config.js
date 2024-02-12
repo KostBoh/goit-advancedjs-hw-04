@@ -22,6 +22,7 @@ export default defineConfig(({ command }) => {
           },
           entryFileNames: 'commonHelpers.js',
         },
+        external: ['iziToast'],
       },
       outDir: '../dist',
     },
