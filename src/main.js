@@ -28,29 +28,25 @@ async function fetchImages(query, page) {
   const PER_PAGE = 40;
   const BASE_URL = 'https://pixabay.com/api/';
 
-  const params = new URLSearchParams({
-    key: API_KEY,
-    q: query,
-    image_type: 'photo',
-    orientation: 'horizontal',
-    safesearch: 'true',
-    page: page,
-    per_page: PER_PAGE,
-  });
-  const url = `${BASE_URL}?${params}`;
-
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Failed to fetch images');
-    }
-    const data = await response.json();
+    const response = await axios.get(BASE_URL, {
+      params: {
+        key: API_KEY,
+        q: query,
+        image_type: 'photo',
+        orientation: 'horizontal',
+        safesearch: 'true',
+        page: page,
+        per_page: PER_PAGE,
+      },
+    });
+
+    const data = response.data;
     if (data.hits.length === 0) {
       gallery.innerHTML = '';
       // Notiflix.Notify.failure(
       //   'Sorry, there are no images matching your search query. Please try again.'
       // );
-
       iziToast.error({
         title: 'Error',
         message:
