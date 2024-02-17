@@ -1,4 +1,3 @@
-import iziToast from 'iziToast';
 import axios from 'axios';
 import Notiflix from 'notiflix';
 
