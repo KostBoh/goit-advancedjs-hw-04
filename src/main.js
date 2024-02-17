@@ -1,5 +1,6 @@
 import iziToast from 'iziToast';
 import axios from 'axios';
+import Notiflix from 'notiflix';
 
 const form = document.getElementById('search-form');
 const gallery = document.querySelector('.gallery');
@@ -46,6 +47,10 @@ async function fetchImages(query, page) {
     const data = await response.json();
     if (data.hits.length === 0) {
       gallery.innerHTML = '';
+      // Notiflix.Notify.failure(
+      //   'Sorry, there are no images matching your search query. Please try again.'
+      // );
+
       iziToast.error({
         title: 'Error',
         message:
