@@ -1,4 +1,5 @@
 import axios from 'axios';
+import iziToast from 'izitoast';
 import Notiflix from 'notiflix';
 
 const form = document.getElementById('search-form');
@@ -7,6 +8,7 @@ const loadMoreBtn = document.querySelector('.load-more');
 
 let currentPage = 1;
 let searchQuery = '';
+let firstSearch = true;
 
 form.addEventListener('submit', async event => {
   event.preventDefault();
@@ -14,6 +16,7 @@ form.addEventListener('submit', async event => {
   searchQuery = input.value.trim();
   currentPage = 1;
   loadMoreBtn.style.display = 'none';
+  firstSearch = true;
   if (searchQuery !== '') {
     await fetchImages(searchQuery, currentPage);
   } else {
@@ -51,9 +54,6 @@ async function fetchImages(query, page) {
     const data = response.data;
     if (data.hits.length === 0) {
       gallery.innerHTML = '';
-      // Notiflix.Notify.failure(
-      //   'Sorry, there are no images matching your search query. Please try again.'
-      // );
       iziToast.error({
         title: 'Error',
         message:
@@ -63,6 +63,13 @@ async function fetchImages(query, page) {
     }
     if (page === 1) {
       gallery.innerHTML = '';
+      if (firstSearch) {
+        iziToast.success({
+          title: 'Success',
+          message: `Hooray! We found ${data.totalHits} images.`,
+        });
+        firstSearch = false;
+      }
     }
     data.hits.forEach(image => {
       const card = createImageCard(image);
@@ -77,10 +84,6 @@ async function fetchImages(query, page) {
     } else {
       loadMoreBtn.style.display = 'block';
     }
-    iziToast.success({
-      title: 'Success',
-      message: `Hooray! We found ${data.totalHits} images.`,
-    });
   } catch (error) {
     console.error(error.message);
     iziToast.error({
