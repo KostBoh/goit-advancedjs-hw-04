@@ -14,7 +14,15 @@ form.addEventListener('submit', async event => {
   searchQuery = input.value.trim();
   currentPage = 1;
   loadMoreBtn.style.display = 'none';
-  await fetchImages(searchQuery, currentPage);
+  if (searchQuery !== '') {
+    await fetchImages(searchQuery, currentPage);
+  } else {
+    iziToast.show({
+      title: 'Hey',
+      message:
+        'The search text is empty. Enter the information you want to find.',
+    });
+  }
 });
 
 loadMoreBtn.addEventListener('click', async () => {

@@ -27,3 +27,28 @@
 .load-more{
   display: none;
 }
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.photo-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;  
+  width: calc(25% - 25px);
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+
+.info p {
+  padding: 5px;
+  background-color: #f9f9f9;
+  text-align: center;
+  
+}
